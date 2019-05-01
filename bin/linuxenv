@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -eu
+
+current_dir=$(cd $(dirname $0) && pwd)
+cd ${current_dir}
+
+SSH_CONFIG_CACHE="${current_dir}/../ssh_config.cache"
+SSH_HOST_NAME='linuxenv'
+
+: "Cache SSH config for faster login" && {
+  [ -f ${SSH_CONFIG_CACHE} ] || vagrant ssh-config > ${SSH_CONFIG_CACHE}
+}
+
+: "Login to Linux" && {
+  exec ssh -F ${SSH_CONFIG_CACHE} ${SSH_HOST_NAME}
+  # As `vagrant ssh` is slower than vanilla `ssh` command.
+  # @see [vagrant sshは、素のsshで接続するより179倍待たされる - Qiita](https://qiita.com/suin/items/e4d5ec7a6eedb7955f51)
+}

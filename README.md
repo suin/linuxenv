@@ -41,13 +41,15 @@ suinの仮想Linux環境。ローカルの開発環境向け。
 
 ### セットアップ
 
-下記コマンドを実行すると、HomebrewでVMware FusionとVagrantが入る。また、vagrant-vmware-desktopのライセンスのアクティベーションがされる。
+下記コマンドを実行すると、HomebrewでVMware FusionとVagrantが入る。また、vagrant-vmware-desktopのライセンスのアクティベーションがされる。最後に、`vagrant up`が実行され、Linux仮想マシンがプロビジョニングされる。
 
 ```
 ./setup.sh
 ```
 
-`git clone`後の初回だけこれをやればいい。
+この手順は、`git clone`後の初回だけこれをやればいい。
+
+最後に[linuxenv](./bin/linuxenv)コマンドにパスが通るように`.bashrc`などを調整する。
 
 ### 日常的な使用法
 
@@ -60,5 +62,5 @@ vagrant up
 仮想Linuxにログイン:
 
 ```
-vagrant ssh
+linuxenv
 ```

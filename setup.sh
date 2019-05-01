@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 set -eu
 
+bold=$(tput bold)
+normal=$(tput sgr0)
+
 function run {
-  echo "$(tput bold)> $@$(tput sgr0)"
+  echo "${bold}> $@${normal}"
   "$@"
   echo ""
 }
@@ -20,13 +23,17 @@ function run {
 : "Activate vagrant-vmware-desktop plugin license" && {
   until [ -f ./license.lic ]
   do
-    read -p "$(tput bold)Please put vagrant-vmware-desktop license file to $(pwd)/license.lic, and press return key:$(tput sgr0)"
+    read -p "${bold}Please put vagrant-vmware-desktop license file to $(pwd)/license.lic, and press return key:${normal}"
   done
   run vagrant plugin license vagrant-vmware-desktop ./license.lic
 }
 
-: "Information" && {
-  echo "$(tput bold)Setup has been finished. You may run following commands in the next setp:$(tput sgr0)"
+: "Provision Linux VM" && {
+  run vagrant up
+}
+
+: "Show tips" && {
+  echo "${bold}Setup has been finished. I suggest adding the following configuration to your .bashrc to use 'linuxenv' command, by which you can log in to the Linux VM wherever you are:${normal}"
   echo ""
-  echo "  vagrant up"
+  echo "  export PATH=\$PATH:$(pwd)/bin"
 }
