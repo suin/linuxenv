@@ -8,9 +8,12 @@ Vagrant.configure("2") do |config|
   config.vm.provider "vmware_desktop"
   config.vm.provider "virtualbox"
 
+  config.vm.hostname = "linuxenv"
+  config.vm.define "linuxenv"
+
   config.vm.provider "vmware_desktop" do |v|
     v.gui = false
-    v.vmx["displayname"] = "Ubuntu Docker"
+    v.vmx["displayname"] = "linuxenv"
     v.vmx["memsize"] = "2048"
     v.vmx["numvcpus"] = "4"
     v.clone_directory = '~/vagrant'

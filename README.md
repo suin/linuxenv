@@ -1,6 +1,6 @@
-# suin-linux
+# linuxenv
 
-suinの仮想Linux環境。
+suinの仮想Linux環境。ローカルの開発環境向け。
 
 ## 構成
 
