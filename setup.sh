@@ -10,14 +10,22 @@ function run {
   echo ""
 }
 
+function install_vagrant_plugin {
+  vagrant plugin list | grep ${1} > /dev/null || {
+    run vagrant plugin install ${1}
+  }
+}
+
 : "Install prerequirements" && {
   run brew cask install vagrant vmware-fusion vagrant-vmware-utility
 }
 
+: "Install vagrant-fsevents plugin" && {
+  install_vagrant_plugin vagrant-fsevents
+}
+
 : "Install vagrant-vmware-desktop plugin" && {
-  vagrant plugin list | grep vagrant-vmware-desktop > /dev/null || {
-    run vagrant plugin install vagrant-vmware-desktop
-  }
+  install_vagrant_plugin vagrant-vmware-desktop
 }
 
 : "Activate vagrant-vmware-desktop plugin license" && {

@@ -22,8 +22,18 @@ Vagrant.configure("2") do |config|
     v.clone_directory = '~/vagrant'
   end
 
-  config.vm.synced_folder "/Volumes/dev", "/Volumes/dev", type: "nfs"
+  config.vm.synced_folder "/Volumes/dev", "/Volumes/dev", type: "nfs", fsevents: true
   config.vm.synced_folder "/Users/suin", "/Users/suin", type: "nfs"
+
+  config.trigger.after [:up, :resume] do |t|
+    t.name = "vagrant-fsevents-start"
+    t.run = { inline: "./vagrant-fsevents.sh start" }
+  end
+
+  config.trigger.after [:halt, :suspend, :destroy] do |t|
+    t.name = "vagrant-fsevents-stop"
+    t.run = { inline: "./vagrant-fsevents.sh stop" }
+  end
 
   # SSH login as root by default
   config.vm.provision "shell", inline: <<-SHELL

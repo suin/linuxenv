@@ -6,6 +6,7 @@ suinの仮想Linux環境。ローカルの開発環境向け。
 
 * Vagrant
 	* NFS
+	* [vagrant-fsevents](https://github.com/Fendrian/vagrant-fsevents) - Forward filesystem change notifications to your Vagrant VM
 * Ubuntu 16.04
 * Docker CE
 * VMware Fusion
