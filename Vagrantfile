@@ -11,6 +11,9 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "linuxenv"
   config.vm.define "linuxenv"
 
+  config.vm.network :forwarded_port, host: 3000, guest: 3000
+  config.vm.network :forwarded_port, host: 3306, guest: 3306
+
   config.vm.provider "vmware_desktop" do |v|
     v.gui = false
     v.vmx["displayname"] = "linuxenv"
