@@ -11,9 +11,15 @@ case ${subcommand} in
     echo ${PID} > vagrant-fsevents.pid
     ;;
   stop)
-    [ -f vagrant-fsevents.pid ] || break
+    [ -f vagrant-fsevents.pid ] || exit
     PID=$(cat vagrant-fsevents.pid)
-    ps -p ${PID} > /dev/null && kill ${PID}
+    ps -p ${PID} > /dev/null && {
+      for CPID in $(pgrep -P ${PID})
+      do
+        kill -15 ${CPID}
+      done
+      kill -15 ${PID}
+    }
     rm vagrant-fsevents.pid
     ;;
 esac
