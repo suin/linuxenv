@@ -1,4 +1,4 @@
 license.lic
 .vagrant
-ssh_config.cache
-vagrant-fsevents.pid
+/*.cache
+/*.pid

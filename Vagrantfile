@@ -35,6 +35,21 @@ Vagrant.configure("2") do |config|
     t.run = { inline: "./vagrant-fsevents.sh stop" }
   end
 
+  vagrant_status_cache_file = './vagrant-status-running.cache'
+  config.trigger.after [:up, :resume] do |t|
+    t.name = "Creating Vagrant status cache file"
+    t.ruby do |env, machine|
+      File.write(vagrant_status_cache_file, '')
+    end
+  end
+
+  config.trigger.after [:halt, :suspend, :destroy] do |t|
+    t.name = "Deleting Vagrant status cache file"
+    t.ruby do |env, machine|
+      File.delete(vagrant_status_cache_file) if File.exist?(vagrant_status_cache_file)
+    end
+  end
+
   # SSH login as root by default
   config.vm.provision "shell", inline: <<-SHELL
     set -x

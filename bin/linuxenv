@@ -2,10 +2,16 @@
 set -eu
 
 current_dir=$(cd $(dirname $0) && pwd)
-cd ${current_dir}
+vagrant_dir=$(dirname ${current_dir})
+cd ${vagrant_dir}
 
-SSH_CONFIG_CACHE="${current_dir}/../ssh_config.cache"
+SSH_CONFIG_CACHE="./ssh_config.cache"
 SSH_HOST_NAME='linuxenv'
+VAGRANT_STATUS_RUNNING_CACHE="./vagrant-status-running.cache"
+
+: "Boot the machine if it is not running" && {
+  [ -f ${VAGRANT_STATUS_RUNNING_CACHE} ] || vagrant up
+}
 
 : "Cache SSH config for faster login" && {
   [ -f ${SSH_CONFIG_CACHE} ] || vagrant ssh-config > ${SSH_CONFIG_CACHE}
