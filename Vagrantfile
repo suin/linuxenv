@@ -1,6 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+require 'etc'
+
+host_username = Etc.getlogin
+
 Vagrant.configure("2") do |config|
   config.vm.box = "bento/ubuntu-16.04"
 
@@ -24,6 +28,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.synced_folder "/Volumes/dev", "/Volumes/dev", type: "nfs", fsevents: true
   config.vm.synced_folder "/Users/suin", "/Users/suin", type: "nfs"
+  config.nfs.map_uid = Etc.getpwnam(host_username).uid
+  config.nfs.map_gid = Etc.getpwnam(host_username).gid
 
   config.trigger.after [:up, :resume] do |t|
     t.name = "vagrant-fsevents-start"
