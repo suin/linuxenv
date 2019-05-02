@@ -53,7 +53,13 @@ Vagrant.configure("2") do |config|
   # SSH login as root by default
   config.vm.provision "shell", inline: <<-SHELL
     set -x
-    echo "exec sudo su -" >> .bashrc
+    grep -qxF 'exec sudo su -' /home/vagrant/.bashrc || echo 'exec sudo su -' >> /home/vagrant/.bashrc
+  SHELL
+
+  # Configure root's .bashrc
+  config.vm.provision "shell", inline: <<-SHELL
+    set -x
+    grep -qxF 'source /vagrant/.bash_profile' /root/.bashrc || echo 'source /vagrant/.bash_profile' >> /root/.bashrc
   SHELL
 
   # Install Docker CE

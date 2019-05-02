@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -eu
 
-current_dir=$(cd $(dirname $0) && pwd)
-vagrant_dir=$(dirname ${current_dir})
+current_working_dir=$(pwd)
+script_dir=$(cd $(dirname $0) && pwd)
+vagrant_dir=$(dirname ${script_dir})
 cd ${vagrant_dir}
 
 SSH_CONFIG_CACHE="./ssh_config.cache"
@@ -15,6 +16,10 @@ VAGRANT_STATUS_RUNNING_CACHE="./vagrant-status-running.cache"
 
 : "Cache SSH config for faster login" && {
   [ -f ${SSH_CONFIG_CACHE} ] || vagrant ssh-config > ${SSH_CONFIG_CACHE}
+}
+
+: "Set current working directory path of the host machine" && {
+  echo ${current_working_dir} > host-current-working-directory.cache
 }
 
 : "Login to Linux" && {
