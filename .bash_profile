@@ -1,5 +1,5 @@
 # this is for root account
-set -eu
+# set -eu
 
 : "Go to the directory which is same as the one of host machine if it is possible" && {
   function goto_dir {
