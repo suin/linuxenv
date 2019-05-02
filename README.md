@@ -6,6 +6,7 @@ suinの仮想Linux環境。ローカルの開発環境向け。
 
 * Vagrant
 	* NFS
+		* [VagrantのNFSを3.7倍速くする設定 - Qiita](https://qiita.com/suin/items/a441acfc15504ee89722)
 	* [vagrant-fsevents](https://github.com/Fendrian/vagrant-fsevents) - Forward filesystem change notifications to your Vagrant VM
 * Ubuntu 16.04
 * Docker CE

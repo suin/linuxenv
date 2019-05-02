@@ -26,8 +26,12 @@ Vagrant.configure("2") do |config|
     v.clone_directory = '~/vagrant'
   end
 
-  config.vm.synced_folder "/Volumes/dev", "/Volumes/dev", type: "nfs", fsevents: true
-  config.vm.synced_folder "/Users/suin", "/Users/suin", type: "nfs"
+  config.vm.synced_folder "/Volumes/dev", "/Volumes/dev", type: "nfs", fsevents: true,
+    mount_options: ['rw', 'vers=3', 'tcp'],
+    linux__nfs_options: ['rw','no_subtree_check','all_squash','async']
+  config.vm.synced_folder "/Users/suin", "/Users/suin", type: "nfs",
+    mount_options: ['rw', 'vers=3', 'tcp'],
+    linux__nfs_options: ['rw','no_subtree_check','all_squash','async']
   config.nfs.map_uid = Etc.getpwnam(host_username).uid
   config.nfs.map_gid = Etc.getpwnam(host_username).gid
 
